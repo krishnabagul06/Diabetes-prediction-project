@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Prediction System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<script>
+function resetForm() {
+
+    document.querySelector("form").reset();
+
+    window.location.href="/";
+
+}
+</script>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>🩺 Diabetes Prediction System</h1>
+            <p class="subtitle">
+                Enter Patient Details For Diabetes Risk Analysis
+            </p>
+
+            <form action="/predict" method="POST">
+
+                <h2 class="section-title">Patient Information</h2>
+
+                <div class="input-group">
+                    <input type="text" placeholder="Patient Name">
+                    <input type="text" placeholder="Gender (Male/Female)">
+                </div>
+
+                <h2 class="section-title">Medical Details</h2>
+
+                <div class="field">
+                    <label>Pregnancies (0 if Male)</label>
+                    <input type="number"
+                            name="Pregnancies"
+                            value="{{ Pregnancies if Pregnancies else '' }}"
+                            required>
+                </div>
+
+                <div class="field">
+                    <label>Glucose Level (70 - 140 mg/dL)</label>
+                    <input type="number"
+       name="Glucose"
+       value="{{ Glucose if Glucose else '' }}"
+       required>
+                </div>
+
+                <div class="field">
+                    <label>Blood Pressure (80 - 120 mmHg)</label>
+                    <input type="number"
+                            name="BloodPressure"
+                            value="{{ BloodPressure if BloodPressure else '' }}"
+                            required>
+                </div>
+
+                <div class="field">
+                    <label>Skin Thickness (10 - 50 mm)</label>
+                    <input type="number"
+                            name="SkinThickness"
+                            value="{{ SkinThickness if SkinThickness else '' }}"
+                            required>
+                </div>
+
+                <div class="field">
+                    <label>Insulin (16 - 166 μU/ml)</label>
+                    <input type="number"
+                            name="Insulin"
+                            value="{{ Insulin if Insulin else '' }}"
+                            required>
+                </div>
+
+                <div class="field">
+                    <label>BMI (18.5 - 24.9 Normal)</label>
+                    <input type="number" step="0.01" name="BMI" value="{{ BMI if BMI else '' }}" required>
+                </div>
+
+                <div class="field">
+                    <label>Diabetes Pedigree Function</label>
+                    <input type="number" step="0.01" name="DiabetesPedigreeFunction" value="{{ DiabetesPedigreeFunction if DiabetesPedigreeFunction else '' }}" required>
+                </div>
+
+                <div class="field">
+                    <label>Age</label>
+                    <input type="number" name="Age" value="{{ Age if Age else '' }}" required>
+                </div>
+
+                <div class="button-group">
+                <button type="submit">
+                      Predict Diabetes Risk
+                </button>
+
+                <button type="button" onclick="resetForm()" class="refresh-btn">
+                      Refresh Form
+                </button>
+              </div>
+            </form>
+
+            {% if prediction_text %}
+            <div class="result">
+                {{ prediction_text }}
+            </div>
+            {% endif %}
+
+            <div class="help-box">
+
+                <h3>ℹ️ Field Information</h3>
+
+                <p><b>Glucose:</b> Blood sugar level from blood test.</p>
+
+                <p><b>Blood Pressure:</b> Blood pressure measurement in mmHg.</p>
+
+                <p><b>BMI:</b> Weight (kg) ÷ Height² (m).</p>
+
+                <p><b>Insulin:</b> Insulin level from lab report.</p>
+
+                <p><b>Skin Thickness:</b> Triceps skin fold thickness.</p>
+
+                <p><b>DPF:</b> Diabetes family history score.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
